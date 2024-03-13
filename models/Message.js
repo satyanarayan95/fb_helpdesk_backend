@@ -19,7 +19,7 @@ const MessageSchema = new Schema({
     require: true,
   },
   created_at: {
-    type: Date,
+    type: Number,
     default: new Date().getTime(),
   },
 });
