@@ -31,14 +31,13 @@ const messageDlr = async (req, res) => {
             const senderId = entry?.messaging[0]?.sender?.id;
             const pageId = entry?.messaging[0]?.recipient?.id;
             const message = entry?.messaging[0]?.message?.text;
-            const timestamp = entry?.messaging[0]?.message?.timestamp;
 
             const newMessage = new Message({
                 clientId: senderId,
                 senderId: senderId,
                 pageId: pageId,
                 message: message,
-                created_at: timestamp
+                created_at: new Date.getTime()
             });
 
             await newMessage.save();
