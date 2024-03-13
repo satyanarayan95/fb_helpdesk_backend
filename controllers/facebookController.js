@@ -38,7 +38,7 @@ const messageDlr = async (req, res) => {
                 senderId: senderId,
                 pageId: pageId,
                 message: message,
-                created_at: timestamp || new Date.getTime()
+                created_at: timestamp || new Date().getTime()
             });
 
             await newMessage.save();
