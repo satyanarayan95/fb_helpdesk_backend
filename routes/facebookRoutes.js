@@ -3,7 +3,7 @@ const { webhookVerify, messageDlr } = require('../controllers/facebookController
 const router = express.Router();
 
 // webhook
-router.get('/verify-webhook', webhookVerify);
+router.get('/webhook-dlr', webhookVerify);
 router.post('/webhook-dlr', messageDlr);
 
 
