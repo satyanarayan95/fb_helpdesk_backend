@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://satya:satya@threads.zzb1kbc.mongodb.net/?retryWrites=true&w=majority&appName=Threads/fb_support', {
+mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
