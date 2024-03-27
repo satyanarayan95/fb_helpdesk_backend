@@ -1,5 +1,5 @@
 const Message = require("../models/Message");
-
+const { io } = require('../server');
 
 const webhookVerify = async (req, res) => {
     try {
@@ -21,6 +21,7 @@ const webhookVerify = async (req, res) => {
     }
 };
 
+https://fbhelpdeskbackend-production.up.railway.app/api
 
 
 const messageDlr = async (req, res) => {
@@ -38,10 +39,13 @@ const messageDlr = async (req, res) => {
                 senderId: senderId,
                 pageId: pageId,
                 message: message,
-                created_at: timestamp
+                created_at: timestamp || new Date().getTime()
             });
 
             await newMessage.save();
+
+            io.emit('new message', newMessage);
+
             res.status(200).end();
         } else {
             res.sendStatus(404);
@@ -49,7 +53,6 @@ const messageDlr = async (req, res) => {
     } catch (error) {
         console.error('Error handling webhook event:', error.message);
         res.sendStatus(500);
-
     }
 };
 
