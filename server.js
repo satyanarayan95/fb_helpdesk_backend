@@ -26,7 +26,12 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-const io = socketIo(server);
+const io = socketIo(server)({
+  cors: {
+    origin: 'https://helpdesk-facebook-smoky.vercel.app',
+    methods: ['GET', 'POST'],
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('A user connected');
