@@ -21,8 +21,6 @@ const webhookVerify = async (req, res) => {
     }
 };
 
-https://fbhelpdeskbackend-production.up.railway.app/api
-
 
 const messageDlr = async (req, res) => {
     try {
