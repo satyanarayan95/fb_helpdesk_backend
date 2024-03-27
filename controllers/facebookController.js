@@ -1,5 +1,5 @@
 const Message = require("../models/Message");
-const { io } = require('../server');
+// const { io } = require('../server');
 
 const webhookVerify = async (req, res) => {
     try {
@@ -42,7 +42,7 @@ const messageDlr = async (req, res) => {
 
             await newMessage.save();
 
-            io.emit('new message', newMessage);
+            // io.emit('new message', newMessage);
 
             res.status(200).end();
         } else {
