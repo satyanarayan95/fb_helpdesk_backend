@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const http = require('http'); // Import the 'http' module
 const socketIo = require('socket.io');
 const Message = require('./models/Message');
 require('dotenv').config();
@@ -22,12 +23,13 @@ mongoose.connect(process.env.DB_URI, {
 
 app.use(cors());
 
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "https://helpdesk-facebook-smoky.vercel.app",
+    methods: ["GET", "POST"]
+  }
 });
-
-const io = socketIo(server);
-io.use(cors());
 
 io.on('connection', (socket) => {
   console.log('A user connected');
@@ -42,7 +44,6 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/facebook', require('./routes/facebookRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 
-// SSE endpoint for sending real-time updates to clients
 app.get('/api/events', (req, res) => {
   res.set({
     'Content-Type': 'text/event-stream',
@@ -68,3 +69,9 @@ app.get('/api/events', (req, res) => {
     res.end();
   });
 });
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+module.exports = { io };
