@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
@@ -59,12 +60,10 @@ async function main() {
 
 main();
 
-app.use(cors());
-
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://helpdesk-facebook-smoky.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
